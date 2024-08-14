@@ -1,3 +1,4 @@
+import pickle
 import pandas as pd
 
 from sklearn.pipeline import Pipeline
@@ -41,3 +42,7 @@ y_pred = clf.predict(x_test)
 
 print(classification_report(y_test, y_pred))
 print(confusion_matrix(y_test, y_pred))
+
+
+with open("src/machine_learning_training/model.pkl", "wb") as f:
+    pickle.dump(clf, f)

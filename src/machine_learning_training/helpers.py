@@ -1,16 +1,20 @@
-import nltk
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.base import BaseEstimator, TransformerMixin
+import nltk
+from nltk.stem import PorterStemmer
 
-
-nltk.download("stopwords", quiet=True)
-stemmer = nltk.stem.SnowballStemmer("english")
+nltk.data.path.append("/tmp")
+nltk.download("stopwords", quiet=True, download_dir="/tmp")
+nltk.download("punkt", download_dir="/tmp")
 stopwords = nltk.corpus.stopwords.words("english")
 
 
 def preprocess_text(text: str) -> str:
+    stemmer = PorterStemmer()
     text = str(text).lower()
-    text = " ".join([w for w in text.split() if w not in stopwords])
+    words = nltk.word_tokenize(text)
+    words = [stemmer.stem(word) for word in words if word not in stopwords]
+    text = " ".join(words)
     text = text.encode("ascii", "ignore").decode("utf-8")
     return text
 

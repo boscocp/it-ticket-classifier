@@ -1,0 +1,7 @@
+services:
+  classification_service:
+    build: .
+    container_name: classificationservice
+    image: classification_service_local
+    ports:
+      - "8001:8001"
